@@ -13,7 +13,6 @@ Built for the **Code for Change** hackathon.
 - **Marks the suspicious parts** inside the person's own message: risky links and warning phrases.
 - **Checks links** without visiting them: look-alike brand names (`paypa1-secure.com`), shortened links, raw IP addresses, `.apk` downloads, unusual endings.
 - **Tells you what to do** in concrete steps, always pointing to official channels, never to details inside the message.
-- **Warn someone:** one tap shares or copies a ready-made warning for a friend or relative.
 - **Works without AI:** a rule-based detector runs on every check. If the AI is unavailable, the app still works.
 
 ## How it works
@@ -37,14 +36,14 @@ Taking the higher score means a scam missed by one method is still caught by the
 
 - No accounts, no database, no cookies, no analytics.
 - Messages are **not stored or logged**.
-- If AI analysis is turned on, the message text is sent to the Anthropic API to be analyzed. If Google Safe Browsing is turned on, only the **links** are sent to Google, never the message text.
+- If AI analysis is turned on, the message text is sent to Google's Gemini API to be analyzed (see Google's terms for how your Gemini API plan handles data). If Google Safe Browsing is turned on, only the **links** are sent to Google, never the message text.
 - With no API keys at all, nothing leaves your server.
 
 ## Tech stack
 
 - **Client:** React 19, Tailwind CSS 4, Vite
 - **Server:** Node.js (18+), Express, no database
-- **AI:** Anthropic Messages API (optional), called with plain `fetch`
+- **AI:** Google Gemini API (optional), called with plain `fetch`
 - **Link reputation:** Google Safe Browsing API (optional)
 
 ## Run it locally
@@ -72,8 +71,8 @@ Open http://localhost:5173 and try one of the example buttons.
 | --- | --- | --- |
 | `PORT` | No | API port (default 5000) |
 | `CLIENT_ORIGIN` | No | Website address allowed to call the API (default: any) |
-| `ANTHROPIC_API_KEY` | No | Turns on AI explanations. Without it, the rule-based detector is used |
-| `ANTHROPIC_MODEL` | No | Model to use (default `claude-haiku-5-5`) |
+| `GEMINI_API_KEY` | No | Turns on AI explanations. Without it, the rule-based detector is used |
+| `GEMINI_MODEL` | No | Model to use (default `gemini-3.8-flash`) |
 | `GOOGLE_SAFE_BROWSING_KEY` | No | Turns on the known-bad-link check |
 
 Check that it is running: http://localhost:5000/api/health shows whether AI and Safe Browsing are on.
